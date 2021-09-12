@@ -1,270 +1,233 @@
-// import React from 'react'
-// import { Form,Button } from 'react-bootstrap';
-// import {
-//   BrowserRouter as Router,Switch,
-//   Link
-// } from "react-router-dom";
-// import "./Login.scss";
-// const Signup = () => {
-//     return (
-//         <div className="login-container">
-//              <Form className="Login">
 
-//              <Form.Group className="mb-3" controlId="formBasicPassword">
-//     <Form.Label className="password">FullName</Form.Label>
-//     <Form.Control type="password" placeholder="Fullname" />
-//   </Form.Group>
+import React, { useState } from "react"
+import "./Sign_Login.css"
+import axios from "axios"
+import { useHistory } from "react-router-dom"
+import { toast } from 'react-toastify';
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const Signup = ({nam,setNam,final,setFinal}) => {
 
-//   <Form.Group className="mb-3" controlId="formBasicEmail">
-//     <Form.Label className="email">Email address</Form.Label>
-//     <Form.Control type="email" placeholder="Email address" />
-//   </Form.Group>
+    const history = useHistory();
+    const [emails,setEmails] = useState();
+    const [pass, setPass] = useState();
+    const [repass, setRePass] = useState();
+   
+    const [register1,setRegister] = useState();
+    const [mysession, setMysession] = useState("");
+    //for enabling the form 
 
-//   <Form.Group className="mb-3" controlId="formBasicPassword">
-//     <Form.Label className="password">Username</Form.Label>
-//     <Form.Control type="password" placeholder="Username" />
-//   </Form.Group>
+    const [disabled,setDisabled] = useState(true);
+    // const [disabled,setDisabled] = useState(true);
+    const [able,setAble] = useState(true);
+    const [man, setMan] = useState(0);
+    const [mail, setMail] = useState(0);
+    const [pas, setPas] = useState(0);
+    const [repas, setRePas] = useState(0); 
+    const [fin,setFin] = useState(0);
+    const [con, setCon] = useState("");
+    const [ user, setUser] = useState({
+        name: "",
+        email:"",
+        password:"",
+        reEnterPassword: ""
+    })
 
-//   <Form.Group className="mb-3" controlId="formBasicPassword">
-//     <Form.Label className="password">Password</Form.Label>
-//     <Form.Control type="password" placeholder="Password" />
-//   </Form.Group>
+    const handleChange = e => {
+        const { name, value } = e.target
+        setUser({
+            ...user,
+            [name]: value
+        })
 
-//   <Form.Group className="mb-3" controlId="formBasicPassword">
-//     <Form.Label className="confirm">Confirm Password</Form.Label>
-//     <Form.Control type="password" placeholder="Confirm Password" />
-//   </Form.Group>
+    //  if(e.target.name === "name"){
+    //      setFinal(e.target.value);
+    //      setMan(1);
+    //  }
+    //  if(e.target.name === "email"){
+       
+    //     setMail(1);
+    // }
 
-//   <Form.Group className="mb-3" controlId="formBasicCheckbox">
-//     <Form.Check className="check" type="checkbox" label="Remember me" />
-//   </Form.Group>
+    // if(e.target.name === "password"){
+    //     setPas(1);
+    // }
+    // if(e.target.name === "reEnterPassword"){
+    //    setRePas(1);
+    // }
 
-//   <Link to="/login"><button type="button" class="btn btn-light light">Login</button></Link>
-//   <Link to="/signup"><button type="button" class="btn btn-light">Signup</button></Link>
-// </Form>
-//         </div>
-//     )
-// }
+//   if(user.name !== " " && user.email !== " " && user.password !== " " && user.reEnterPassword !== " " ){
+//       setDisabled(false);
+//   }
+//     if(man && mail && pas && repas ){
+//         setDisabled(true);
+//    }
+    // if(e.target.name === "check"){
+    //     setFin(1);
+    // }
 
-// export default Signup;
+        if(e.target.name === "email"){
+            if(!user.email.includes("@")){
+              setEmails("*Invalid Email");
+            } else{
+                setEmails("");
+            }
+        } 
 
-import React from "react";
-import {
-  BrowserRouter as Router,Switch,
-  Link
-} from "react-router-dom";
-import "./Login.scss";
-class Signup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fields: {
-        firstName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        mobile: ""
-      },
-      errors: {
-        firstName: "",
-        email: "",
-        password: "",
-        mobile: "",
-        confirmPassword: ""
-      }
-    };
-  }
-
-  validate = (name, value) => {
-    const { fields } = this.state;
-    switch (name) {
-      case "firstName":
-        if (!value || value.trim() === "") {
-          return "First name is Required";
-        } else {
-          return "";
+        if(e.target.name === "password"){
+            if(user.password.length <= 5){
+                setPass("*Password must contain atleast 5 length");
+            } else{
+                setPass("");
+            }
         }
-      case "email":
-        if (!value) {
-          return "Email is Required";
-        } else if (
-          !value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
-        ) {
-          return "Enter a valid email address";
-        } else {
-          return "";
+
+        if(e.target.name === "reEnterPassword"){
+            if(user.reEnterPassword !== user.password && user.reEnterPassword.length !== user.password){
+                // setRePass("*RePassword must be same as password")
+                setRePass("");
+            } else{
+                // setRePass("");
+                setRePass("*RePassword must be same as password")
+                if(user.reEnterPassword !== user.password){
+                    setRePass("*RePassword must be same as password")
+                }
+            }
+            if(e.target.value === " "){
+                setRePass("*RePassword must be same as password")
+            }
         }
-      case "mobile":
-        if (!value || value.trim() === "") {
-          return "Mobile number is Required";
-        } else if (!value.match(/^[6-9]\d{9}$/)) {
-          return "Enter a valid mobile number.";
-        } else {
-          return "";
-        }
-      case "password":
-        if (!value) {
-          return "Password is Required";
-        } else if (value.length < 8 || value.length > 15) {
-          return "Please fill at least 8 character";
-        } else if (!value.match(/[a-z]/g)) {
-          return "Please enter at least lower character.";
-        } else if (!value.match(/[A-Z]/g)) {
-          return "Please enter at least upper character.";
-        } else if (!value.match(/[0-9]/g)) {
-          return "Please enter at least one digit.";
-        } else {
-          return "";
-        }
-      case "confirmPassword":
-        if (!value) {
-          return "Confirm Password Required";
-        } else if (value !== fields.password) {
-          return "New Password and Confirm Password Must be Same";
-        } else {
-          return "";
-        }
-      default: {
-        return "";
-      }
+
     }
-  };
 
-  handleUserInput = (e) => {
-    this.setState({
-      errors: {
-        ...this.state.errors,
-        [e.target.name]: this.validate(e.target.name, e.target.value)
-      },
-      fields: {
-        ...this.state.fields,
-        [e.target.name]: e.target.value
-      }
-    });
-  };
+  
+    // const handleClick = (e) =>{
+    //     setDisabled(false);
+    // }
 
-  handleSubmit = (e) => {
-    const { fields } = this.state;
-    e.preventDefault();
-    let validationErrors = {};
-    Object.keys(fields).forEach((name) => {
-      const error = this.validate(name, fields[name]);
-      if (error && error.length > 0) {
-        validationErrors[name] = error;
-      }
-    });
-    if (Object.keys(validationErrors).length > 0) {
-      this.setState({ errors: validationErrors });
-      return;
+    const handleClick1 = (e) =>{
+        if(able){
+        setDisabled(false);
+        setAble(false);
+        } else{
+            setDisabled(true);
+            setAble(true);
+        }
+        // let obj = { "name" : user.name, "email" : user.email, "password": user.password, "reEnterPassword" : user.reEnterPassword}
+        // localStorage.setItem(con, JSON.stringify(obj));
+
+        // sessionStorage.setItem("mysession", JSON.stringify(obj));
     }
-    if (fields.firstName && fields.email && fields.password && fields.mobile) {
-      const data = {
-        firstName: fields.firstName,
-        email: fields.email,
-        password: fields.password,
-        mobile: fields.mobile
-      };
-      window.alert("subit success", JSON.stringify(data));
-      console.log("----data----", data);
-    }
-  };
 
-  render() {
-    const { fields, errors } = this.state;
-    return (
-      <div className="signup-main">
-        <div  >
-          {/* <div> */}
+//     if(man && mail && pas && repas ){
+//         setDisabled(true);
+//    }
 
-            <div>
-              <label className="signup-first">First name:</label><br/>
-              <input
-                type="text"
-                name="firstName"
-                value={fields.firstName}
-                onChange={(event) => this.handleUserInput(event)}
-                placeholder="First Name"
-                className="input-signup"
-              />
-            {/* </div> */}
-            <div>
-              <span className="text-danger">{errors.firstName}</span>
-            </div>
-          </div>
-
-          <div>
-            <label className="signup-email">Email:</label><br/>
-            <input
-              type="email"
-              name="email"
-              value={fields.email}
-              onChange={(event) => this.handleUserInput(event)}
-              placeholder="Email Address"
-              className="input-signup"
-            />
-            <div>
-              <span className="text-danger2">{errors.email}</span>
-            </div>
-          </div>
-
-          <div>
-            <label className="signup-mobile">Mobile:</label><br/>
-            <input
-              name="mobile"
-              value={fields.mobile}
-              onChange={(event) => this.handleUserInput(event)}
-              placeholder="mobile"
-              className="input-signup"
-            />
-            <div>
-              <span className="text-danger1">{errors.mobile}</span>
-            </div>
-          </div>
-
-          <div>
-            <label className="signup-password">Password:</label><br/>
-            <input
-              type="Password"
-              name="password"
-              value={fields.password}
-              onChange={(event) => this.handleUserInput(event)}
-              placeholder="Password"
-              className="input-signup"
-            />
-            <div>
-              <span className="text-danger">{errors.password}</span>
-            </div>
-          </div>
-
-          <div>
-            <label className="signup-confirm">Confirm Password:</label><br/>
-            <input
-              type="Password"
-              name="confirmPassword"
-              value={fields.confirmPassword}
-              onChange={(event) => this.handleUserInput(event)}
-              placeholder="confirm Password"
-              className="input-signup"
-            />
-            <div>
-              <span className="text-danger1">{errors.confirmPassword}</span>
-            </div>
-          </div>
+    const register = (e) => {
+        const { name, email, password, reEnterPassword } = user
+      
+        if( name && email && password && (password === reEnterPassword)){
+           
+            // setRegister("Success");
+            axios.post("http://localhost:9002/register", user)
+            .then( res => {
+                
+                // alert(res.data.message)
+                if(res.data.message === "User already registerd"){
+                    toast.error(res.data.message);
+                }
+                else{
+                toast.success(res.data.message);
+                history.push("/login")
+                }
+            })
+        } else {
+            // alert("invlid input")
+            // toast.success("invalid input");
+            setRegister("*Fill the Input Field First");
           
-         
-        </div>
-        <br />
-        <button
-          type="button"
-          className="signup-btn "
-          onClick={this.handleSubmit}
-        >
-         Signup
-        </button>
-       <Link to="/login"><button type="button" className="login-btn ">Login</button></Link>
-      </div>
-    );
-  }
+        
+        }
+        if(user.password === "" && user.email === "" && user.reEnterPassword === ""){
+            setEmails("*Invalid Email");
+            setPass("*Password must contain atleast 5 length");
+            setRePass("*RePassword must be same as password");
+        } else if(user.password === "" && user.reEnterPassword === ""){
+            setPass("*Password must contain atleast 5 length");
+            setRePass("*RePassword must be same as password");
+        } else if(user.reEnterPassword === ""){
+            setRePass("*RePassword must be same as password");
+        }
+
+    
+       
+    }
+
+   
+    return (
+        <div className="register">
+            
+            <h1>Register</h1>
+            <span className="name">UserName</span>
+            <input type="text" name="name" value={user.name} placeholder="Enter Name*" onChange={ handleChange } className="input"></input>
+            <span className="email">Email</span>
+            <input type="text" name="email" value={user.email} placeholder="Enter Email*" onChange={ handleChange }  className="input" required></input>
+            <p className="emailValid">{emails}</p>
+            <span className="password">Password</span>
+            <input type="password" name="password" value={user.password} placeholder="Enter Password*"  className="input" onChange={ handleChange }></input>
+            <p className="passValid">{pass}</p>
+            <span className="confirm">Confirm Password</span>
+            <input type="password" name="reEnterPassword" value={user.reEnterPassword} placeholder="Enter RePassword*"  className="input" onChange={ handleChange }></input>
+            <p className="repassValid">{repass}</p>
+           
+           
+            <input type="checkbox" name="check" value={user.check} className="check" onChange={handleClick1}></input>
+             <label for="vehicle1" className="remember">Remember me</label>
+          
+             <button disabled={disabled} className="button" onClick={register}>signup</button>
+               <p className="repassValid">{register1}</p>
+                <div>or</div>
+               <button  className="button" onClick={() => history.push("/login")}>Login</button> 
+                                      
+         </div>
+          
+          //new one
+
+//  <div class="container container1">
+//     <form>
+//     <div class="imgcontainer">
+
+//      </div>
+//      <h1>Register</h1>
+//      <label for="email" className="email"><b>UserName</b></label><br/>
+//      <input type="text" name="name" value={user.name} placeholder="Enter Name*" onChange={ handleChange } required ></input>
+//     <label for="email" className="email"><b>Email</b></label><br/>
+//     <input type="text" value={user.email} onChange={handleChange} placeholder="Enter Email" name="email" required />
+//     <p className="emailValid">{emails}</p>
+
+//     <label for="passsword" className="password"><b>Password</b></label><br/>
+//     <input type="password" placeholder="Enter Password" value={user.password} onChange={handleChange} name="password" required />
+//     <p className="passValid">{pass}</p>
+    
+//     <input type="checkbox" name="check" value={user.check} className="check1" onChange={handleClick}></input>
+//              <label for="vehicle1" className="remember1">Remember me</label>
+            
+//     <button disabled={disabled} className="buttons" type="submit" onClick={register}>Register</button>
+//        <div>or</div>
+//     <button className="buttons" onClick={() => history.push("/login")}>login</button>
+
+//       <div class="container">
+
+// </div>
+//       </form>
+//   </div>
+    )
 }
+
 export default Signup;
+
+
+
+
+
 

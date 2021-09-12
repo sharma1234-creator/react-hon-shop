@@ -22,9 +22,11 @@ const Header = ({add,setAdd ,quantity,cond, valve,setValve}) => {
            
              
             <input type="text" className="input-field" value={input} onChange={handleChange5}/>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
+            
             <span className="font-icon">
             <i className="far fa-heart"></i>
+
             {/* <button type="button" className="header-button" onClick={handleClick5}>X</button> */}
             <div className="add-count">
             <p className="add-cart cart">{add}</p>

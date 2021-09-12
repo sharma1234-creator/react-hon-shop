@@ -1,0 +1,41 @@
+.first{
+    position:relative;
+    left:55px;
+    bottom:80px;
+   margin-top:150px;
+  
+  
+}
+.new-user{
+    position:relative;
+    left:57px;
+    bottom:80px;
+   
+}
+
+.body{
+    position:relative;
+    top:150px;
+    left:500px;
+    border:1px solid green;
+    width:30%;
+    background-color:whitesmoke;
+    border-radius: 20px;;
+}
+
+/* signup */
+
+.sign-user{
+   position:relative;
+   /* top:120px; */
+}
+.btn1{
+    position:relative;
+    /* top:130px; */
+    left:465px;
+
+}
+.conf{
+    position:relative;
+    bottom:3px;
+}

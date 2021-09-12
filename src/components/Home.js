@@ -10,7 +10,7 @@ import Content from "./Content";
 // import Bundle from "./NavComponents/Bundle";
 
 // import './App.css';
-function Home() {
+function Home({tcolor, wish, setTcolor,setWish}) {
  
 
   const [add,setAdd] = useState(0);
@@ -33,7 +33,7 @@ function Home() {
         <div>
         <Carousel1/><br/><br/>
         
-        <Content logic={logic} setLogic={setLogic} review={review} setReview={setReview} add={add} setAdd={setAdd} quantity={quantity} setQuantity={setQuantity} cond={cond} setCond={setCond} afterWish={afterWish} setAfterWish={setAfterWish}  valve={valve} setValve={setValve}/><br/>
+        <Content logic={logic} setLogic={setLogic} review={review} setReview={setReview} add={add} setAdd={setAdd} quantity={quantity} setQuantity={setQuantity} cond={cond} setCond={setCond} afterWish={afterWish} setAfterWish={setAfterWish}  valve={valve} setValve={setValve} tcolor={tcolor} wish={wish} setTcolor={setTcolor} setWish={setWish}/><br/>
         <ContentReview logic={logic} setLogic={setLogic} review={review} setReview={setReview}/>
         {/* <Bundle/> */}
         </div>

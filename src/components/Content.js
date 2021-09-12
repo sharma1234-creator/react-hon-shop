@@ -8,31 +8,32 @@ import {
     Link
   } from "react-router-dom";
 import "./style.scss";
-const Content = ({add,setAdd,quantity,setQuantity,review,setReview,cond,setCond, afterWish,setAfterWish, valve,setValve ,logic, setLogic} ) => {
+const Content = ({add,setAdd,quantity,setQuantity,review,setReview,cond,setCond, afterWish,setAfterWish, valve,setValve ,logic, setLogic,tcolor,wish,setTcolor,setWish,truth,setTruth,isRight,setIsRight} ) => {
    
     const [color,setColor] = useState("");
     const [price,setPrice] = useState("");
     const [item,setItem] = useState("");
-    const [wish,setWish] = useState(0);
-    const [truth,setTruth] = useState(0);
-    const [isRight,setIsRight] = useState(0);
-    const [tcolor,setTcolor] = useState(0);
+    // const [wish,setWish] = useState(0);
+    // const [truth,setTruth] = useState(0);
+    // const [isRight,setIsRight] = useState(0);
+    // const [tcolor,setTcolor] = useState(0);
   
     useEffect(() => {
       handleClick("black");
     }, [])
 
-    const handleWish = () =>{
-        if(!tcolor ){
-        setWish("red");
-        setTcolor(true);
-        }
-        else{
-            setWish("wheat");
-            setTcolor(false);
-        }
-        setCond(true);
-    }
+    // const handleWish = () =>{
+    //     if(!tcolor ){
+    //     setWish("red");
+    //     setTcolor(true);
+    //     }
+    //     else{
+    //         setWish("wheat");
+    //         setTcolor(false);
+    //     }
+    //     setCond(true);
+    // }
+
     const handleClick = (event) =>{
         if(event === "khaki"){
           setColor("khaki");
@@ -56,20 +57,20 @@ const Content = ({add,setAdd,quantity,setQuantity,review,setReview,cond,setCond,
      
     }
 
-    const handleClick1 = (e) =>{
-        if(!truth){
-           setAdd(quantity );
-           setTruth(true);
-           setIsRight(true);
-        }
-        else{
-        setAdd("0");
-        setTruth(false);
-        setIsRight(false);
-        }
+    // const handleClick1 = (e) =>{
+    //     if(!truth){
+    //        setAdd(quantity );
+    //        setTruth(true);
+    //        setIsRight(true);
+    //     }
+    //     else{
+    //     setAdd("0");
+    //     setTruth(false);
+    //     setIsRight(false);
+    //     }
        
-        setQuantity("");
-    }
+    //     setQuantity("");
+    // }
     return (
         <div className="main-content">
             <h1 className="content-header">Traction</h1>
@@ -101,26 +102,37 @@ const Content = ({add,setAdd,quantity,setQuantity,review,setReview,cond,setCond,
            <hr className="content-horizontal"></hr><br/>
            <div className="content-quantity">
             <h6>Quantity</h6>
-           <select name="cars" className="dropdown-content" id="cars" value={quantity} placeholder="add" onChange={(e)=>setQuantity(e.target.value)}>
-               <option value="0">0</option>
+           
+            <select name="cars"  id="cars" value={quantity} placeholder="add" onChange={(e)=>setQuantity(e.target.value)}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+            </select>
+            {/* <select name="cars" className="dropdown-content" id="cars" value={quantity} placeholder="add" onChange={(e)=>setQuantity(e.target.value)}>
+         
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
-                <option value="5">5</option>
+                <option value="5">5</option> 
                 <option value="6">6</option>
                 <option value="7">7</option>
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
-           </select>
+           </select> */}
            </div>
            <div>
-           {/* <button type="button" className={isRight ? " btn btn2-secondary" : " btn btn-outline-secondary"} onClick={handleClick1} >{truth ? "remove from cart" : "Add To Cart"}</button><br/> */}
-           <button type="button" class="button-cart button11" style={{color:"white"}} className={isRight ? " btn btn2-secondary" : " btn btn-outline-secondary"} onClick={handleClick1}>{truth ? "remove from cart" : "Add To Cart"}</button><br/>
-           {/* <button type="button"  className={isRight ? " btn btn2-secondary" : " btn btn-secondary"} onClick={handleClick1}></button><br/> */}
+
+           {/* <button type="button" class="button-cart button11" style={{color:"white"}} className={isRight ? " btn btn2-secondary" : " btn btn-outline-secondary"} onClick={handleClick1}>{truth ? "remove from cart" : "Add To Cart"}</button><br/> */}
+          <Link to="/login1"><button type="button" class="button-cart button11" style={{color:"white"}} className={isRight ? " btn btn2-secondary" : " btn btn-outline-secondary"}>{truth ? "remove from cart" : "Add To Cart"}</button><br/></Link> 
+       
            <i class="fas fa-heart far5" style={{color:wish}}></i>
-           <a type='button'  className="wishlist"  onClick={handleWish}>{tcolor ? "ADDED TO WISHLIST" : "ADD TO WISHLIST"}</a>
+          {/* <a type='button'  className="wishlist"  onClick={handleWish}>{tcolor ? "ADDED TO WISHLIST" : "ADD TO WISHLIST"}</a> */}
+   
+         
+          <Link to="/login"> <a type='button'  className="wishlist">{tcolor ? "ADDED TO WISHLIST" : "ADD TO WISHLIST"}</a></Link>
            </div>
         </div>
     )
